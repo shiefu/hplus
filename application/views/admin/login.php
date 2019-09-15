@@ -20,28 +20,26 @@
 </head>
 
 <body class="gray-bg">
-
     <div class="middle-box text-center loginscreen  animated fadeInDown">
         <div>
             <div>
-
                 <h1 class="logo-name">H+</h1>
-
             </div>
             <h3>欢迎使用 - <?=SITE_CNAME?>后台</h3>
-
-            <form class="m-t" role="form" action="/home/index">
+            <form class="m-t" role="form" method="post" action="<?=ADMIN_DIR?>/home/do_login">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="登录帐号" required="">
+                    <input type="text" name="account" class="form-control" placeholder="登录帐号" required="">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="登录密码" required="">
+                    <input type="password" name="password" class="form-control" placeholder="登录密码" required="">
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
-
-<!--                <p class="text-muted text-center"> <a href="login.html#"><small>忘记密码了？</small></a> | <a href="register.html">注册一个新账号</a>-->
-                </p>
-
+                <?php
+                    if (isset($message)){
+                        $message = urldecode($message);
+                        echo '<div class="alert alert-danger"><strong>'.$message.'</strong></div>';
+                    }
+                ?>
             </form>
         </div>
     </div>
