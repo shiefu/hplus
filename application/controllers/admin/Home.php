@@ -46,24 +46,23 @@ class Home extends CI_Controller {
         // 登錄帳號存在
         if ($query->num_rows() > 0){
             $user = $query->row_array();
-            // 登錄密碼不正確
-            if (md5($password) != $user['password']){
-                $message = '登录密码不正确';
-                redirect(site_url(ADMIN_DIR.'/home/login/'.$message));
-            }
             // 使用者狀態不是有效的
             if ($user['status'] != 1){
                 $message = '帐号状态: '.$user['status_name'];
                 redirect(site_url(ADMIN_DIR.'/home/login/'.$message));
             }
+            // 登錄密碼不正確
+            elseif (md5($password) != $user['password']){
+                $login_fail_count = $user['login_fail_count'] + 1;
+                $message = '登录密码不正确, 已登录错误'.$login_fail_count.'次, 超过'.LOCK_COUNT.'次将冻结帐号';
+                $status = ($login_fail_count >= LOCK_COUNT) ? LOCK_COUNT_STATUS : $user['status'];
+                $this->user_model->update_user($user['id'], array('login_fail_count' => $login_fail_count, 'status' => $status));
+                redirect(site_url(ADMIN_DIR.'/home/login/'.$message));
+            };
+            // 登錄成功
             unset($user['password']);
             $this->session->set_userdata($user);
-            $result = $this->user_model->update_user($user['id'], array('last_login_time'=>date('Y-m-d H:i:s')));
-            // 更新最後登錄時間失敗
-            if ($result['code'] != 0){
-                $message = $result['message'];
-                redirect(site_url(ADMIN_DIR.'/home/login/'.$message));
-            }
+            $this->user_model->update_user($user['id'], array('login_fail_count' => 0, 'last_login_time' => date('Y-m-d H:i:s')));
             redirect(site_url(ADMIN_DIR));
         }
         // 登錄帳號不存在

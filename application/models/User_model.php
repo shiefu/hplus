@@ -13,7 +13,7 @@ class User_model extends CI_Model
     //==================================================================================================================
     public function get_user( $id = null, $account = null, $password = null, $status = null )
     {
-        $this->db->select('*')->from('user');
+        $this->db->select('*')->from('v_user');
         if ( !empty($id) ) {
             $this->db->where('id', $id);
         }

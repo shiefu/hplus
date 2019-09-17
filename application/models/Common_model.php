@@ -51,6 +51,10 @@ class Common_model extends CI_Model{
         define('ADMIN_DIR', '/admin');
         // 後台資源目錄
         define('ADMIN_ASSETS_DIR', HTTP_ROOT.'/assets/admin');
+        // 登錄錯誤凍結次數
+        define('LOCK_COUNT', 5);
+        // 登錄超過凍結次數狀態
+        define('LOCK_COUNT_STATUS', 5);
     }
 
     // 定義當前語系
