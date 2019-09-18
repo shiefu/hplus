@@ -80,4 +80,9 @@ class Home extends CI_Controller {
         $this->session->sess_destroy();
         redirect(site_url(ADMIN_DIR.'/home/login/'));
     }
+
+    public function dashboard()
+    {
+        $this->load->view(ADMIN_DIR.'/dashboard');
+    }
 }

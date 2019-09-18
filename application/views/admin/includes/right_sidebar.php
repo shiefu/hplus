@@ -5,10 +5,10 @@
             <li class="active">
                 <a data-toggle="tab" href="#tab-1"><i class="fa fa-gear"></i> 主题</a>
             </li>
-            <li class="">
+            <li style="display: none;">
                 <a data-toggle="tab" href="#tab-2">通知</a>
             </li>
-            <li>
+            <li style="display: none;">
                 <a data-toggle="tab" href="#tab-3">项目进度</a>
             </li>
         </ul>
